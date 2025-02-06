@@ -47,12 +47,21 @@ const Navbar = () => {
       {/* for Small Device */}
       <div className="md:hidden flex items-center gap-2 sm:gap-5 text-gray-500">
         <div className="flex items-center gap-2">
-          <button>Become Educator</button>|{" "}
-          <Link to="/my-enrollments">My Enrollments </Link>
+          {user && (
+            <>
+              <button>Become Educator</button>|
+              <Link to="/my-enrollments">My Enrollments </Link>
+            </>
+          )}
         </div>
-        <button>
-          <img src={assets.user_icon} alt="user-icon" />
-        </button>
+
+        {user ? (
+          <UserButton />
+        ) : (
+          <button onClick={() => openSignIn()}>
+            <img src={assets.user_icon} alt="user-icon" />
+          </button>
+        )}
       </div>
     </div>
   );
