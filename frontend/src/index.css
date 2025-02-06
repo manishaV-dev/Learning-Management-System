@@ -5,3 +5,14 @@
 * {
   font-family: "Outfit";
 }
+
+
+@layer components {
+  .text-home-heading-large {
+    font-size: 46px;
+  }
+
+  .text-home-heading-small {
+    font-size: 36px;
+  }
+}
