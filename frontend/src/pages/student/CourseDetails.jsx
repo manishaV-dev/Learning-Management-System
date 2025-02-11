@@ -5,12 +5,14 @@ import Loading from "../../components/student/Loading";
 import { assets } from "../../assets/assets";
 import humanizeDuration from "humanize-duration";
 import Footer from "../../components/student/Footer";
+import Youtube from "react-youtube";
 
 const CourseDetails = () => {
   const { id } = useParams();
   const [courseData, setCourseData] = useState(null);
   const [isOpen, setIsOpen] = useState({});
   const [isEnrolled, setIsEnrolled] = useState(false);
+  const [playerData, setPlayerData] = useState(null);
   const {
     allCourses,
     calcRating,
@@ -126,15 +128,28 @@ const CourseDetails = () => {
                           />
                           <div className="flex items-center justify-between w-full text-gray-800 text-xs md:text-sm">
                             <p>{lecture.lectureTitle}</p>
-                            <div className="text-blue-500 cursor-pointer">
-                              {lecture.isPreviewFree && <p>Preview</p>}
-                            </div>
-                            <p>
-                              {humanizeDuration(
-                                lecture.lectureDuration * 60 * 1000,
-                                { units: ["h", "m"] }
+                            <div className="flex gap-2 ">
+                              {lecture.isPreviewFree && (
+                                <p
+                                  className="text-blue-500 cursor-pointer"
+                                  onClick={() =>
+                                    setPlayerData({
+                                      videoId: lecture.lectureUrl
+                                        .split("/")
+                                        .pop(),
+                                    })
+                                  }
+                                >
+                                  Preview
+                                </p>
                               )}
-                            </p>
+                              <p>
+                                {humanizeDuration(
+                                  lecture.lectureDuration * 60 * 1000,
+                                  { units: ["h", "m"] }
+                                )}
+                              </p>
+                            </div>
                           </div>
                         </li>
                       ))}
@@ -159,7 +174,23 @@ const CourseDetails = () => {
 
         {/* Right side */}
         <div className="z-10 max-w-[424px] shadow-2xl rounded-lg md:rounded-none overflow-hidden bg-white min-w-[200px] sm:min-w-[380px]">
-          <img src={courseData.courseThumbnail} alt={courseData.courseTitle} />
+          {playerData ? (
+            <Youtube
+              videoId={playerData.videoId}
+              opts={{
+                playerVars: {
+                  autoplay: 1,
+                },
+              }}
+              iframeClassName="w-full aspect-video"
+            />
+          ) : (
+            <img
+              src={courseData.courseThumbnail}
+              alt={courseData.courseTitle}
+            />
+          )}
+
           <div className="p-5">
             <div className="flex items-center gap-2">
               <img
