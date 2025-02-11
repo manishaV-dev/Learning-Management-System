@@ -12,6 +12,8 @@ const AppContextProvider = ({ children }) => {
   const [allCourses, setAllCourses] = useState([]);
   const [isEducator, setIsEducator] = useState(true);
 
+  const [enrolledCourses, setEnrolledCourses] = useState("");
+
   // Fetch all courses
   const fetchAllCourse = async () => {
     setAllCourses(dummyCourses);
@@ -54,11 +56,17 @@ const AppContextProvider = ({ children }) => {
         totalLectures += chapter.chapterContent.length;
       }
     });
-    return totalLectures
+    return totalLectures;
+  };
+
+  // fetch user enrolled course
+  const fetchEnrolledCourses = async () => {
+    setEnrolledCourses(dummyCourses);
   };
 
   useEffect(() => {
     fetchAllCourse();
+    fetchEnrolledCourses();
   }, []);
 
   const value = {
@@ -70,7 +78,8 @@ const AppContextProvider = ({ children }) => {
     setIsEducator,
     calculateChapterTime,
     calculateCourseDuration,
-    calculateNoOfLectures
+    calculateNoOfLectures,
+    enrolledCourses, fetchEnrolledCourses
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
