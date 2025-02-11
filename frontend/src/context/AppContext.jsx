@@ -12,7 +12,7 @@ const AppContextProvider = ({ children }) => {
   const [allCourses, setAllCourses] = useState([]);
   const [isEducator, setIsEducator] = useState(true);
 
-  const [enrolledCourses, setEnrolledCourses] = useState("");
+  const [enrolledCourses, setEnrolledCourses] = useState([]);
 
   // Fetch all courses
   const fetchAllCourse = async () => {

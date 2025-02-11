@@ -6,7 +6,6 @@ import Footer from "../../components/student/Footer";
 const MyEnrollment = () => {
   const {
     enrolledCourses,
-    fetchEnrolledCourses,
     calculateCourseDuration,
     navigate,
   } = useContext(AppContext);
